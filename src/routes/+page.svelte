@@ -28,6 +28,16 @@
             <button>Create</button>
         </form>
 
-        <h3>Active Schema</h3>
+        <h3>Your Schemas:</h3>
+        <hr>
+        {#each data.schemas as schema}
+            <div class="schema">
+                <h1>{schema.name}</h1>
+                <p>Created: {schema.created}</p>
+                <a href="/{schema.id}">View</a>
+                <hr>
+            </div>
+        {/each}
     </div>
 </section>
+

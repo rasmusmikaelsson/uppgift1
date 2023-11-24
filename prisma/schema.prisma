@@ -8,7 +8,14 @@ datasource db {
 }
 
 model user {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  password String
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  password    String
+}
+
+model schema {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  created     DateTime  @default(now())
 }
