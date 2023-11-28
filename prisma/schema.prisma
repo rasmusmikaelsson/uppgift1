@@ -19,3 +19,14 @@ model schema {
   description String
   created     DateTime  @default(now())
 }
+
+model exercise {
+  id          Int       @id @default(autoincrement())
+  name        String
+  reps        Int
+  sets        Int
+  weight      Int
+  rest        Int
+  order       Int
+  description String
+}

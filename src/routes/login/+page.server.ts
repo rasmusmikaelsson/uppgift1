@@ -37,7 +37,7 @@ export const actions: Actions = {
         if (password === existingUser.password) {
           // Set a cookie and redirect after successful login
           cookies.set('username', username);
-          throw redirect(307, '/');
+          throw redirect(307, '/dashboard');
         } else {
           return fail(400, { password: 'Incorrect password.' });
         }
@@ -50,7 +50,7 @@ export const actions: Actions = {
         });
 
         cookies.set('username', username);
-        throw redirect(307, '/');
+        throw redirect(307, '/dashboard');
       }
     }
 

@@ -1,17 +1,15 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     export let form;
-    export let data;
+    // export let data;
 
 </script>
 
 <main>
+    <a href="/"><button>Back</button></a>
     <!-- Loginpage -->
     <div class="login-form">
         <h1>Log In</h1>
-        <p>
-            'There is no registration'
-        </p>
         <div class="chose-username">
             <form method="post" action="?/login" use:enhance>
                 <input type="text" name="username" placeholder="Enter Username..">

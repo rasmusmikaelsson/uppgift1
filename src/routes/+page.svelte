@@ -2,42 +2,17 @@
     export let data;
 </script>
 
-<section class="dashboard">
+{#if data.username == undefined}
+    <a href="/login"><button>Login</button></a>
+{:else}
     <form method="post" action="/login?/logout">
         <button>Logout</button>
     </form>
-    <div class="dashboard__header">
-        <h1>Dashboard</h1>
-        <p>Here you can see all your data</p>
-    </div>
-    <div class="dashboard__content">
-        <div class="sessions">
-            <h1>Create A Schema</h1>
-        </div>
+{/if}
 
-        <form action="?/create" method="post">
-            <input
-                type="text"
-                name="schemaName"
-                placeholder="Enter schema name.."
-            />
-            <input
-                type="text"
-                name="schemaDescription"
-                placeholder="Enter schema description.."/>
-            <button>Create</button>
-        </form>
+<h1>Hej och välkommen!</h1>
+<p>Här är landningpagen</p>
 
-        <h3>Your Schemas:</h3>
-        <hr>
-        {#each data.schemas as schema}
-            <div class="schema">
-                <h1>{schema.name}</h1>
-                <p>Created: {schema.created}</p>
-                <a href="/{schema.id}">View</a>
-                <hr>
-            </div>
-        {/each}
-    </div>
-</section>
-
+<h3>Links:</h3>
+<hr>
+<a href="/dashboard">Dashboard</a>
