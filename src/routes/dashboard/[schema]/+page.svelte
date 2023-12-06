@@ -1,29 +1,5 @@
-<script>
+<script lang="ts">
     export let data;
-    let exercise = "";
-    let repCount = "";
-    let setCount = "";
-    /**
-     * @type {any[]}
-     */
-    let exercisesList = [];
-
-    const exercises = ["Pushups", "Situps", "Squats"];
-    const repCounts = Array.from({ length: 100 }, (_, i) => i + 1);
-    const setCounts = Array.from({ length: 20 }, (_, i) => i + 1);
-
-    function createExercise() {
-        const newExercise = {
-            exercise,
-            repCount,
-            setCount,
-        };
-        exercisesList = [...exercisesList, newExercise];
-
-        exercise = "";
-        repCount = "";
-        setCount = "";
-    }
 </script>
 
 <a href="/dashboard"><button>Back</button></a>
@@ -31,33 +7,47 @@
 <h1>Schema: {data.schemaName}</h1>
 <p>Description: {data.schemaDescription}</p>
 
-<form on:submit|preventDefault={createExercise}>
-    <label for="exercise">Exercise:</label>
-    <select id="exercise" bind:value={exercise}>
-        {#each exercises as ex}
-            <option value={ex}>{ex}</option>
-        {/each}
+<form action="?/addExercise" method="post">
+    <input type="text" name="exerciseName" placeholder="Exercise name.." />
+
+    <label for="sets">Sets: </label>
+    <select name="sets" id="sets" placeholder="Reps..">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
     </select>
-    <label for="repCount">Rep Count:</label>
-    <select id="repCount" bind:value={repCount}>
-        {#each repCounts as rep}
-            <option value={rep}>{rep}</option>
-        {/each}
+    <label for="reps">Reps</label>
+    <select name="reps" id="reps" placeholder="Reps..">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
     </select>
-    <label for="setCount">Set Count:</label>
-    <select id="setCount" bind:value={setCount}>
-        {#each setCounts as set}
-            <option value={set}>{set}</option>
-        {/each}
-    </select>
-    <button type="submit">Add Exercise</button>
+ 
+    <input type="text" name="weight" placeholder="Weight in kg..">
+    <input type="submit" value="Add exercise" />
 </form>
 
-{#each exercisesList as exercise}
+{#each data.exercise as exercise}
     <div>
+        <h2>{exercise.name}</h2>
+        <p>sets: {exercise.sets}</p>
+        <p>reps: {exercise.reps}</p>
+        <p>weight: {exercise.weight}</p>
+        <button>Done</button>
         <hr>
-        <p>Exercise: {exercise.exercise}</p>
-        <p>Rep Count: {exercise.repCount}</p>
-        <p>Set Count: {exercise.setCount}</p>
     </div>
 {/each}

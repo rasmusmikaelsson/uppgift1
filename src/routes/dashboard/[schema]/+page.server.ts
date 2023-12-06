@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import type { Actions } from '@sveltejs/kit';
 
 const prisma = new PrismaClient();
 
@@ -15,27 +16,40 @@ export const load = async ({ params, cookies }) => {
         }
     });
 
-
-
     const exercise = await prisma.exercise.findMany({
         where: {
-            id: params.exercise
-        },
-        select: {
-            id: true,
-            name: true,
-            sets: true,
-            reps: true,
-            weight: true,
-            rest: true,
-            order: true
+            schemaId: parseInt(params.schema)
         }
     });
 
-
-
     
-    
-    return { schemaName: schema?.name ?? '', schemaDescription: schema?.description ?? '', username: username };
+    return { schemaName: schema?.name ?? '', schemaDescription: schema?.description ?? '', username: username, exercise: exercise };
 };
 
+export const actions: Actions = {
+    addExercise: async ({ request,params }) => {
+        const formData = await request.formData();
+
+        const exerciseName = formData.get('exerciseName')?.toString() ?? '';
+        const exerciseReps = parseInt(formData.get('reps')?.toString() ?? '0');
+        const exerciseSets = parseInt(formData.get('sets')?.toString() ?? '0');
+        const exerciseWeight = formData.get('weight')?.toString() ?? '';
+
+        await prisma.exercise.create({
+            data: {
+                name: exerciseName,
+                rest: 0,
+                order: 0,
+                reps: exerciseReps,
+                sets: exerciseSets,
+                weight: exerciseWeight,
+                description: '', // Add the description property here
+                schema: {
+                    connect: {
+                        id: parseInt(params.schema!)
+                    }
+                }
+            }
+        });
+    }
+};

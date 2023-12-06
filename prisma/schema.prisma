@@ -8,25 +8,29 @@ datasource db {
 }
 
 model user {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
-  password    String
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  password String
 }
 
 model schema {
-  id          Int       @id @default(autoincrement())
-  name        String
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
   description String
-  created     DateTime  @default(now())
+  created     DateTime   @default(now())
+  exercises   exercise[]
 }
 
 model exercise {
-  id          Int       @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   name        String
   reps        Int
   sets        Int
-  weight      Int
+  weight      String
   rest        Int
   order       Int
   description String
+
+  schema   schema? @relation(fields: [schemaId], references: [id])
+  schemaId Int?
 }
