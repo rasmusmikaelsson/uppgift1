@@ -7,30 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id       Int    @id @default(autoincrement())
-  name     String @unique
-  password String
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  password  String
+  pixelarts PixelArt[]
 }
 
-model schema {
-  id          Int        @id @default(autoincrement())
-  name        String     @unique
-  description String
-  created     DateTime   @default(now())
-  exercises   exercise[]
-}
-
-model exercise {
-  id          Int    @id @default(autoincrement())
+model PixelArt {
+  id          Int      @id @default(autoincrement())
   name        String
-  reps        Int
-  sets        Int
-  weight      String
-  rest        Int
-  order       Int
-  description String
+  height      Int
+  width       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+  pixels      Pixel[]
+}
 
-  schema   schema? @relation(fields: [schemaId], references: [id])
-  schemaId Int?
+model Pixel {
+  id        Int      @id @default(autoincrement())
+  color     String
+  pixelArt  PixelArt? @relation(fields: [pixelArtId], references: [id])
+  pixelArtId Int?
 }

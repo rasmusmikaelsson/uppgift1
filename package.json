@@ -105,6 +105,7 @@
     "sirv": "^2.0.3",
     "sorcery": "^0.11.0",
     "source-map-js": "^1.0.2",
+    "sql-tag": "^1.0.1",
     "strip-indent": "^3.0.0",
     "svelte-hmr": "^0.15.3",
     "svelte-preprocess": "^5.1.1",
