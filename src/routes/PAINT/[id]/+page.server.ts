@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import type { PageServerLoad } from './$types';
-import { error } from '@sveltejs/kit';
+import { error, type Actions } from '@sveltejs/kit';
 
 const prisma = new PrismaClient();
 
@@ -24,3 +24,35 @@ export const load = (async ({ params }) => {
 
     return {pixelart};
 }) satisfies PageServerLoad;
+
+export const actions: Actions = {
+    paint: async ({ request, params }) => {
+
+        if(!params.id){
+            throw error(404, 'Not found');
+        }
+
+        let id = Number(params.id);
+        let form = await request.formData();
+        let color = form.get('color')?.toString();
+        let pixelId = form.get('id')?.toString();
+        console.log(color, pixelId);
+
+        //update pixel
+        if(color && pixelId) {
+            let pixel = await prisma.pixel.update({
+                where: {
+                    id: parseInt(pixelId)
+                },
+                data: {
+                    color: color
+                }
+            });
+            return {
+                status: 200,
+                body: pixel
+            }
+        }
+
+    }
+};

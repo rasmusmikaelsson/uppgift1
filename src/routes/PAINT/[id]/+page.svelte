@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { enhance } from "$app/forms";
     import type { PageData } from "./$types";
 
     export let data: PageData;
@@ -8,7 +9,7 @@
 
 </script>
 
-<h1>{data.pixelart.id}</h1>
+<!-- <h1>{data.pixelart.id}</h1> -->
 
 <main>
     <div class="colorButtons">
@@ -24,11 +25,15 @@
     <div class="thePixelart">
         {#if data.pixelart}
             {#each Array.from(data.pixelart.pixels) as pixel}
-                <form action="?/paint">
-                    <input type="hidden" name="x" value="0">
-                    <input type="hidden" name="y" value="0">
-                    <input type="hidden" name="#ffffff" value="0">
-                    <button class="pixel" style="background-color: rgb(255, 255, 255);" on:mouseover={(e) => {if (e.buttons == 1)e.currentTarget.style.backgroundColor = selectedColor}}></button>
+                <form method="post" action="?/paint" use:enhance>
+                    <input type="hidden" name="id" value={pixel.id}>
+                    <input type="hidden" name="color" value={selectedColor}>
+                    <button class="pixel" style={"background-color: "+pixel.color+";"} on:mouseover={(e) => {if (e.buttons == 1)
+                        
+                        // submit the form
+                        e.currentTarget.click()
+                        
+                        }}></button>
                 </form>
             {/each}
         {/if}
@@ -42,6 +47,7 @@
     main {
         margin: auto;
         width: 80vw;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
